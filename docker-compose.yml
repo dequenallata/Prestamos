@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+
+  postgres:
+      image: postgres
+      ports:
+        - "54334:5434"
+      volumes:
+        - ~/.docker/dbplatform/postgres:/var/lib/postgresql/data
+      environment:
+        POSTGRES_PGDATA: /var/lib/postgresql/data/pgdata
+        POSTGRES_USER: admin
+        POSTGRES_DB: pruebas
+        POSTGRES_PASSWORD: admin
+
+  web:
+      build: .
+      volumes: 
+        - ./:/opt/data
+      ports:
+        - 5000:80
+      depends_on:
+        - postgres
